@@ -90,6 +90,10 @@
         "named": true
       },
       {
+        "type": "predefined_type",
+        "named": true
+      },
+      {
         "type": "prefix_unary_expression",
         "named": true
       },
@@ -1459,10 +1463,6 @@
         {
           "type": "_expression",
           "named": true
-        },
-        {
-          "type": "predefined_type",
-          "named": true
         }
       ]
     }
@@ -1562,6 +1562,10 @@
         "types": [
           {
             "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "predefined_type",
             "named": true
           }
         ]

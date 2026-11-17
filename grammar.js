@@ -23,6 +23,7 @@ export default grammar({
     [$.default_declaration_flag, $._expression],
     [$.default_declaration_value, $._expression],
     [$.vector_expression, $.typecast_expression],
+    [$._type, $._nonleft_expression],
   ],
 
   supertypes: ($) => [$._definition, $._statement, $._expression, $._type],
@@ -147,7 +148,7 @@ export default grammar({
         optional(repeat(alias(/(out)|(in)/i, "_param_scope"))),
         optional("@"),
         field("type", $._type),
-        field("name", $.identifier),
+        field("name", choice($.identifier, $.predefined_type)),
         field("default_value", optional(seq("=", $._expression))),
       );
 
@@ -483,6 +484,7 @@ export default grammar({
         $.ternary_expression,
         $.string_concat_expression,
         $.const_array_expression,
+        $.predefined_type,
         $._literal,
       ),
 
@@ -719,6 +721,7 @@ export default grammar({
         /vararg/i,
         /latent/i,
         /meta/i,
+        /unsafe/i,
         $.deprecated_modifier,
         $.version_modifier,
       ),
