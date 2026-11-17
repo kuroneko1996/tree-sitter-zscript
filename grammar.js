@@ -546,7 +546,7 @@ export default grammar({
     prefix_unary_expression: ($) =>
       prec.right(
         ZPREC.PREFIX,
-        seq(choice("++", "--", "-", "!", "~"), $._expression),
+        seq(choice("++", "--", "+", "-", "!", "~"), $._expression),
       ),
 
     parenthesized_expression: ($) => seq("(", $._expression, ")"),
