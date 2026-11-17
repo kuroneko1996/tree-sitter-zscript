@@ -518,6 +518,7 @@ export default grammar({
         [ZPREC.MULT, "*"],
         [ZPREC.MULT, "/"],
         [ZPREC.MULT, "%"],
+        [ZPREC.MULT, "**"],
         [ZPREC.MULT, /dot/i],
         [ZPREC.MULT, /cross/i],
         [ZPREC.BITWISE, "|"],
