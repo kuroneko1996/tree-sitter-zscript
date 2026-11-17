@@ -389,7 +389,7 @@ export default grammar({
         "(",
         field("left", $._expression),
         ":",
-        field("right", $.identifier),
+        field("right", $._expression),
         ")",
         field("body", $._statement),
       ),
