@@ -1053,7 +1053,7 @@
       },
       "condition": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "_expression",
@@ -1062,23 +1062,35 @@
         ]
       },
       "initializer": {
-        "multiple": false,
+        "multiple": true,
         "required": true,
         "types": [
           {
-            "type": "declaration_statement",
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": ";",
+            "named": false
+          },
+          {
+            "type": "_expression",
             "named": true
           },
           {
-            "type": "generic_statement",
+            "type": "declaration_statement",
             "named": true
           }
         ]
       },
       "update": {
-        "multiple": false,
+        "multiple": true,
         "required": false,
         "types": [
+          {
+            "type": ",",
+            "named": false
+          },
           {
             "type": "_expression",
             "named": true
@@ -1114,6 +1126,16 @@
       "right": {
         "multiple": false,
         "required": true,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": false,
         "types": [
           {
             "type": "_expression",
@@ -2468,10 +2490,6 @@
   },
   {
     "type": "flagdef",
-    "named": false
-  },
-  {
-    "type": "for",
     "named": false
   },
   {

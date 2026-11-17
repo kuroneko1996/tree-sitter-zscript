@@ -440,26 +440,34 @@ export default grammar({
         optional(";"),
       ),
 
-    for_statement: ($) =>
-      seq(
-        "for",
-        "(",
-        field(
-          "initializer",
-          choice($.declaration_statement, $.generic_statement),
-        ),
-        field("condition", $._expression),
-        ";",
-        optional(field("update", $._expression)),
-        ")",
-        field("body", $._statement),
-      ),
+      for_statement: ($) => {
+        const expr_list = seq($._expression, repeat(seq(",", $._expression)));
+
+        return seq(
+          /for/i,
+          "(",
+          field(
+            "initializer",
+            choice(
+              $.declaration_statement,
+              seq(optional(expr_list), ";"),
+            ),
+          ),
+          field("condition", optional($._expression)),
+          ";",
+          field("update", optional(expr_list)),
+          ")",
+          field("body", $._statement),
+        );
+      },
+
 
     foreach_statement: ($) =>
       seq(
         "foreach",
         "(",
         field("left", $._expression),
+        optional(seq(",", field("value", $._expression))),
         ":",
         field("right", $._expression),
         ")",
