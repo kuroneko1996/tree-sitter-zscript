@@ -323,7 +323,7 @@ export default grammar({
 
     map_type: ($) =>
       seq(
-        alias(/map/i, "_map"),
+        alias(/mapiterator|map/i, "_map"),
         "<",
         field("type", $._type),
         ",",
