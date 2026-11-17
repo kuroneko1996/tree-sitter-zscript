@@ -254,8 +254,17 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "SYMBOL",
-            "name": "modifier"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "scope"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "modifier"
+              }
+            ]
           }
         },
         {
@@ -829,7 +838,13 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "flagdef",
+            "flags": "i"
+          },
+          "named": false,
           "value": "flagdef"
         },
         {

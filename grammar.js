@@ -69,7 +69,7 @@ export default grammar({
         optional(/extend/i),
         alias(/struct/i, "_struct"),
         field("name", $.identifier),
-        repeat($.modifier),
+        repeat(choice($.scope, $.modifier)),
         "{",
         repeat(
           choice(
@@ -174,7 +174,7 @@ export default grammar({
 
     flagdef_declaration: ($) =>
       seq(
-        "flagdef",
+        alias(/flagdef/i, "flagdef"),
         field("name", $.identifier),
         ":",
         field("variable", $.identifier),
