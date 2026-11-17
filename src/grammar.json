@@ -3938,44 +3938,40 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "PATTERN",
-              "value": "\\w{4} +\\w+ +"
+              "type": "SYMBOL",
+              "name": "identifier"
+            },
+            {
+              "type": "STRING",
+              "value": "\"----\""
+            },
+            {
+              "type": "STRING",
+              "value": "----"
+            },
+            {
+              "type": "STRING",
+              "value": "\"####\""
+            },
+            {
+              "type": "STRING",
+              "value": "####"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "TOKEN",
+              "content": {
+                "type": "PATTERN",
+                "value": "[\\w\\[\\]\\\\]+"
+              }
             },
             {
               "type": "PATTERN",
-              "value": "\\w{4} +#+ +"
-            },
-            {
-              "type": "PATTERN",
-              "value": "\"----\" +\\w+ +"
-            },
-            {
-              "type": "PATTERN",
-              "value": "\"----\" +#+ +"
-            },
-            {
-              "type": "PATTERN",
-              "value": "---- +\\w+ +"
-            },
-            {
-              "type": "PATTERN",
-              "value": "---- +#+ +"
-            },
-            {
-              "type": "PATTERN",
-              "value": "\"####\" +\\w+ +"
-            },
-            {
-              "type": "PATTERN",
-              "value": "\"####\" +#+ +"
-            },
-            {
-              "type": "PATTERN",
-              "value": "#### +\\w+ +"
-            },
-            {
-              "type": "PATTERN",
-              "value": "#### +#+ +"
+              "value": "#+"
             }
           ]
         },
@@ -4002,10 +3998,6 @@
                   "name": "number_literal"
                 }
               ]
-            },
-            {
-              "type": "SYMBOL",
-              "name": "number_literal"
             },
             {
               "type": "SYMBOL",
@@ -4145,19 +4137,62 @@
       ]
     },
     "control_statement": {
-      "type": "SEQ",
+      "type": "CHOICE",
       "members": [
         {
-          "type": "FIELD",
-          "name": "keyword",
-          "content": {
-            "type": "SYMBOL",
-            "name": "identifier"
-          }
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "keyword",
+              "content": {
+                "type": "ALIAS",
+                "content": {
+                  "type": "TOKEN",
+                  "content": {
+                    "type": "PREC",
+                    "value": 1,
+                    "content": {
+                      "type": "PATTERN",
+                      "value": "loop|stop|wait|fail",
+                      "flags": "i"
+                    }
+                  }
+                },
+                "named": true,
+                "value": "identifier"
+              }
+            },
+            {
+              "type": "STRING",
+              "value": ";"
+            }
+          ]
         },
         {
-          "type": "CHOICE",
+          "type": "SEQ",
           "members": [
+            {
+              "type": "FIELD",
+              "name": "keyword",
+              "content": {
+                "type": "ALIAS",
+                "content": {
+                  "type": "TOKEN",
+                  "content": {
+                    "type": "PREC",
+                    "value": 1,
+                    "content": {
+                      "type": "PATTERN",
+                      "value": "goto",
+                      "flags": "i"
+                    }
+                  }
+                },
+                "named": true,
+                "value": "identifier"
+              }
+            },
             {
               "type": "CHOICE",
               "members": [
@@ -4167,9 +4202,16 @@
                     {
                       "type": "ALIAS",
                       "content": {
-                        "type": "PATTERN",
-                        "value": "super",
-                        "flags": "i"
+                        "type": "TOKEN",
+                        "content": {
+                          "type": "PREC",
+                          "value": 1,
+                          "content": {
+                            "type": "PATTERN",
+                            "value": "super",
+                            "flags": "i"
+                          }
+                        }
                       },
                       "named": false,
                       "value": "_super"
@@ -4191,13 +4233,10 @@
               ]
             },
             {
-              "type": "BLANK"
+              "type": "STRING",
+              "value": ";"
             }
           ]
-        },
-        {
-          "type": "STRING",
-          "value": ";"
         }
       ]
     },

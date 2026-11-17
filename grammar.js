@@ -236,8 +236,8 @@ export default grammar({
         optional(","),
       ),
 
-      const_array_declaration: ($) =>
-        alias($.const_array_definition, $.const_array_declaration),
+    const_array_declaration: ($) =>
+      alias($.const_array_definition, $.const_array_declaration),
 
     states_declaration: ($) =>
       seq(
@@ -632,26 +632,26 @@ export default grammar({
           $.block,
         ),
       ),
-    frame_sprite: ($) =>
-      seq(
-        choice(
-          /\w{4} +\w+ +/,
-          /\w{4} +#+ +/,
-          /"----" +\w+ +/,
-          /"----" +#+ +/,
-          /---- +\w+ +/,
-          /---- +#+ +/,
-          /"####" +\w+ +/,
-          /"####" +#+ +/,
-          /#### +\w+ +/,
-          /#### +#+ +/,
+      frame_sprite: ($) =>
+        seq(
+          choice(
+            $.identifier,
+            '"----"',
+            "----",
+            '"####"',
+            "####",
+          ),
+          choice(
+            token(/[\w\[\]\\]+/),
+            /#+/,
+          ),
+          choice(
+            seq(optional("-"), $.number_literal),
+            $.frame_random_tic,
+          ),
         ),
-        choice(
-          seq(optional("-"), $.number_literal),
-          $.number_literal,
-          $.frame_random_tic,
-        ),
-      ),
+
+
 
     frame_random_tic: ($) =>
       seq(
@@ -681,17 +681,22 @@ export default grammar({
         seq(/light/i, "(", field("light", $._expression), ")"),
       ),
 
-    control_statement: ($) =>
-      seq(
-        field("keyword", $.identifier),
-        optional(
-          choice(
-            seq(alias(/super/i, "_super"), "::", $._expression),
-            $._expression,
+      control_statement: ($) =>
+        choice(
+          seq(
+            field("keyword", alias(token(prec(1, /loop|stop|wait|fail/i)), $.identifier)),
+            ";",
+          ),
+          seq(
+            field("keyword", alias(token(prec(1, /goto/i)), $.identifier)),
+            choice(
+              seq(alias(token(prec(1, /super/i)), "_super"), "::", $._expression),
+              $._expression,
+            ),
+            ";",
           ),
         ),
-        ";",
-      ),
+
 
     scope: ($) => choice("clearscope", "virtualscope", "play", "ui", "action"),
 

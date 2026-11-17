@@ -1163,11 +1163,15 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
           "type": "frame_random_tic",
+          "named": true
+        },
+        {
+          "type": "identifier",
           "named": true
         },
         {
@@ -2135,6 +2139,18 @@
     "named": false
   },
   {
+    "type": "\"####\"",
+    "named": false
+  },
+  {
+    "type": "\"----\"",
+    "named": false
+  },
+  {
+    "type": "####",
+    "named": false
+  },
+  {
     "type": "#include",
     "named": false
   },
@@ -2192,6 +2208,10 @@
   },
   {
     "type": "--",
+    "named": false
+  },
+  {
+    "type": "----",
     "named": false
   },
   {

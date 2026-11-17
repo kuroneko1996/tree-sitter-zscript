@@ -112,6 +112,7 @@ class CustomMonster : Actor {
         label: (label_identifier))
       (frame_statement
         sprite: (frame_sprite
+          (identifier)
           (number_literal))
         action: (identifier))
       (control_statement
@@ -120,6 +121,7 @@ class CustomMonster : Actor {
         label: (label_identifier))
       (frame_statement
         sprite: (frame_sprite
+          (identifier)
           (number_literal))
         keyword: (frame_keyword)
         (block
