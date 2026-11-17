@@ -967,23 +967,7 @@
         "required": false,
         "types": [
           {
-            "type": "boolean_literal",
-            "named": true
-          },
-          {
-            "type": "hex_literal",
-            "named": true
-          },
-          {
-            "type": "name_literal",
-            "named": true
-          },
-          {
-            "type": "number_literal",
-            "named": true
-          },
-          {
-            "type": "string_literal",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -1793,11 +1777,11 @@
       "required": false,
       "types": [
         {
-          "type": "const_array_declaration",
+          "type": "const_array_definition",
           "named": true
         },
         {
-          "type": "const_declaration",
+          "type": "const_definition",
           "named": true
         },
         {
@@ -1810,10 +1794,6 @@
         },
         {
           "type": "modifier",
-          "named": true
-        },
-        {
-          "type": "scope",
           "named": true
         },
         {
@@ -2245,6 +2225,10 @@
   },
   {
     "type": "?",
+    "named": false
+  },
+  {
+    "type": "@",
     "named": false
   },
   {

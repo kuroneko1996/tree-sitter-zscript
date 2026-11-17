@@ -66,11 +66,20 @@ export default grammar({
 
     struct_definition: ($) =>
       seq(
+        optional(/extend/i),
         alias(/struct/i, "_struct"),
         field("name", $.identifier),
-        repeat(choice($.scope, $.modifier)),
+        repeat($.modifier),
         "{",
-        repeat($._struct_declaration),
+        repeat(
+          choice(
+            $.variable_declaration,
+            $.method_declaration,
+            $.const_definition,
+            $.const_array_definition,
+            $.enum_declaration,
+          ),
+        ),
         "}",
         optional(";"),
       ),
@@ -122,6 +131,7 @@ export default grammar({
         repeat(seq(optional(","), field("type", $._type))),
         field("name", $.identifier),
         $.parameter_list,
+        optional(alias(/const/i, "_const")),
         choice($.block, ";"),
       ),
 
@@ -151,6 +161,7 @@ export default grammar({
     variable_declaration: ($) =>
       seq(
         repeat(choice($.scope, $.modifier, $.access_level)),
+        optional("@"),
         field("type", $._type),
         optional($.subscript_token),
         field("name", $.identifier),
@@ -216,7 +227,7 @@ export default grammar({
     enum_declaration_value: ($) =>
       seq(
         field("name", $.identifier),
-        optional(seq("=", field("value", $._literal))),
+        optional(seq("=", field("value", $._expression))),
         optional(","),
       ),
 
@@ -254,7 +265,7 @@ export default grammar({
     classname_type: ($) =>
       seq(alias(/class/i, "_class"), "<", field("type", $._type), ">"),
     array_type: ($) =>
-      seq(alias(/array/i, "_array"), "<", field("type", $._type), ">"),
+      seq(alias(/array/i, "_array"), "<", optional("@"), field("type", $._type), ">"),
 
     map_type: ($) =>
       seq(
@@ -652,6 +663,8 @@ export default grammar({
         alias(/static/i, "_static"),
         /transient/i,
         /native/i,
+        /readonly/i,
+        /internal/i,
         $.deprecated_modifier,
         $.version_modifier,
       ),
