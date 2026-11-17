@@ -226,22 +226,12 @@ export default grammar({
       seq(
         alias(/states/i, "_states"),
         "{",
-        repeat(
-          choice(
-            $.state_label,
-            $.frame_statement,
-            $.control_statement,
-          ),
-        ),
+        repeat(choice($.state_label, $.frame_statement, $.control_statement)),
         "}",
       ),
 
     state_label: ($) =>
-      seq(
-        field("label", alias($.identifier, $.label_identifier)),
-        ":",
-      ),
-
+      seq(field("label", alias($.identifier, $.label_identifier)), ":"),
 
     const_declaration: ($) => alias($.const_definition, $.const_declaration),
 
@@ -581,7 +571,8 @@ export default grammar({
           ";",
           seq($.function_expression, ";"),
           seq(field("action", $.identifier), ";"),
-          $.block),
+          $.block,
+        ),
       ),
     frame_sprite: ($) =>
       seq(
@@ -597,7 +588,11 @@ export default grammar({
           /#### +\w+ +/,
           /#### +#+ +/,
         ),
-        choice($.number_literal, $.frame_random_tic),
+        choice(
+          seq(optional("-"), $.number_literal),
+          $.number_literal,
+          $.frame_random_tic,
+        ),
       ),
 
     frame_random_tic: ($) =>
