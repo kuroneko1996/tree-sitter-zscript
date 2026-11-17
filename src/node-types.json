@@ -1537,6 +1537,10 @@
             "named": false
           },
           {
+            "type": "@",
+            "named": false
+          },
+          {
             "type": "_expression",
             "named": true
           },
@@ -2165,6 +2169,10 @@
   },
   {
     "type": "..",
+    "named": false
+  },
+  {
+    "type": "...",
     "named": false
   },
   {

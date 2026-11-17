@@ -135,28 +135,30 @@ export default grammar({
         choice($.block, ";"),
       ),
 
-    parameter_list: ($) =>
-      seq(
+    parameter_list: ($) => {
+      const param = seq(
+        optional(repeat(alias(/(out)|(in)/i, "_param_scope"))),
+        optional("@"),
+        field("type", $._type),
+        field("name", $.identifier),
+        field("default_value", optional(seq("=", $._expression))),
+      );
+
+      return seq(
         "(",
         optional(
           choice(
             alias(/void/i, $.predefined_type),
-            field(
-              "parameter",
-              repeat1(
-                seq(
-                  optional(repeat(alias(/(out)|(in)/i, "_param_scope"))),
-                  field("type", $._type),
-                  field("name", $.identifier),
-                  field("default_value", optional(seq("=", $._expression))),
-                  optional(","),
-                ),
-              ),
+            "...",
+            seq(
+              field("parameter", seq(param, repeat(seq(",", param)))),
+              optional(seq(",", "...")),
             ),
           ),
         ),
         ")",
-      ),
+      );
+    },
 
     variable_declaration: ($) =>
       seq(
@@ -265,7 +267,13 @@ export default grammar({
     classname_type: ($) =>
       seq(alias(/class/i, "_class"), "<", field("type", $._type), ">"),
     array_type: ($) =>
-      seq(alias(/array/i, "_array"), "<", optional("@"), field("type", $._type), ">"),
+      seq(
+        alias(/array/i, "_array"),
+        "<",
+        optional("@"),
+        field("type", $._type),
+        ">",
+      ),
 
     map_type: ($) =>
       seq(
@@ -724,7 +732,15 @@ export default grammar({
 
     name_literal: ($) => /'[^']*'/,
 
-    number_literal: ($) => /[\d.]+/,
+    number_literal: ($) =>
+      token(
+        choice(
+          /\d+\.\d*([eE][+-]?\d+)?[fF]?/,
+          /\.\d+([eE][+-]?\d+)?[fF]?/,
+          /\d+[eE][+-]?\d+[fF]?/,
+          /\d+[fF]?/,
+        ),
+      ),
 
     hex_literal: ($) => /0x[\d\w]+/i,
 
