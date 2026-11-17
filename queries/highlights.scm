@@ -10,6 +10,23 @@
 (function_expression function: (subscript_expression array: (identifier) @function)) ; function name with namespace
 (function_expression function: (subscript_expression array: (member_access_expression member: (identifier) @function))) ; ditto but for member access
 
+(function_expression
+	argument: (identifier) @property
+	":")
+
+(parameter_list
+	[
+		(predefined_type)
+		(class_type)
+		(classname_type)
+		(array_type)
+		(map_type)
+		(function_type)
+	]
+	.
+	(identifier) @variable.parameter)
+
+
 (states_declaration label: (label_identifier) @type)
 (frame_statement sprite: (frame_sprite (frame_random_tic "_frame_random_tic_func" @keyword)))
 (frame_statement keyword: (frame_keyword) @keyword)
@@ -19,10 +36,11 @@
 (enum_declaration name: (identifier) @type)
 
 [
-	(name_literal)
 	(escape_sequence)
 	(colour_escape_sequence)
 ] @string.escape
+
+(name_literal) @string.special.symbol
 
 [
 	(predefined_type)

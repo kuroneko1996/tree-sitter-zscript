@@ -44,12 +44,12 @@ class MathTest : Object {
           (assignment_expression
             left: (identifier)
             right: (string_concat_expression
-              (string_concat_expression
-                (string_literal
-                  (colour_escape_sequence))
-                (number_literal))
               (string_literal
-                (colour_escape_sequence)))))
+                (colour_escape_sequence))
+              (string_concat_expression
+                (number_literal)
+                (string_literal
+                  (colour_escape_sequence))))))
         (declaration_statement
           type: (class_type)
           (assignment_expression
@@ -103,9 +103,9 @@ class InventoryHandler : Thinker {
               (function_expression
                 function: (identifier)
                 argument: (string_literal)
-                argument: (identifier)
+                name: (identifier)
                 argument: (number_literal)
-                argument: (identifier)
+                name: (identifier)
                 argument: (identifier)))))))))
 
 ==================
@@ -151,10 +151,11 @@ class DamageHelper {
       name: (identifier)))
   (class_definition
     name: (identifier)
-    (const_definition
-      name: (identifier)
-      value: (number_literal))
-    (const_array_definition
+    (const_declaration
+      (const_declaration
+        name: (identifier)
+        value: (number_literal)))
+    (const_array_declaration
       type: (predefined_type)
       name: (identifier)
       contents: (const_array_expression
