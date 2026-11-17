@@ -2453,20 +2453,12 @@
     "named": false
   },
   {
-    "type": "action",
-    "named": false
-  },
-  {
     "type": "break",
     "named": false
   },
   {
     "type": "class_type",
     "named": true
-  },
-  {
-    "type": "clearscope",
-    "named": false
   },
   {
     "type": "colour_escape_sequence",
@@ -2526,16 +2518,8 @@
     "named": true
   },
   {
-    "type": "norollback",
-    "named": false
-  },
-  {
     "type": "number_literal",
     "named": true
-  },
-  {
-    "type": "play",
-    "named": false
   },
   {
     "type": "property",
@@ -2546,15 +2530,7 @@
     "named": false
   },
   {
-    "type": "ui",
-    "named": false
-  },
-  {
     "type": "version",
-    "named": false
-  },
-  {
-    "type": "virtualscope",
     "named": false
   },
   {

@@ -268,7 +268,8 @@ export default grammar({
 
     empty_statement: ($) => ";",
 
-    block: ($) => seq("{", repeat(choice($._statement, $.empty_statement)), "}"),
+    block: ($) =>
+      seq("{", repeat(choice($._statement, $.empty_statement)), "}"),
 
     _type: ($) =>
       choice(
@@ -436,30 +437,26 @@ export default grammar({
         "while",
         "(",
         field("condition", $._expression),
-        ")"
+        ")",
       ),
 
-      for_statement: ($) => {
-        const expr_list = seq($._expression, repeat(seq(",", $._expression)));
+    for_statement: ($) => {
+      const expr_list = seq($._expression, repeat(seq(",", $._expression)));
 
-        return seq(
-          /for/i,
-          "(",
-          field(
-            "initializer",
-            choice(
-              $.declaration_statement,
-              seq(optional(expr_list), ";"),
-            ),
-          ),
-          field("condition", optional($._expression)),
-          ";",
-          field("update", optional(expr_list)),
-          ")",
-          field("body", $._statement),
-        );
-      },
-
+      return seq(
+        /for/i,
+        "(",
+        field(
+          "initializer",
+          choice($.declaration_statement, seq(optional(expr_list), ";")),
+        ),
+        field("condition", optional($._expression)),
+        ";",
+        field("update", optional(expr_list)),
+        ")",
+        field("body", $._statement),
+      );
+    },
 
     foreach_statement: ($) =>
       seq(
@@ -711,7 +708,15 @@ export default grammar({
         ),
       ),
 
-    scope: ($) => choice("clearscope", "virtualscope", "play", "ui", "action", "norollback"),
+    scope: ($) =>
+      choice(
+        /clearscope/i,
+        /virtualscope/i,
+        /play/i,
+        /ui/i,
+        /action/i,
+        /norollback/i,
+      ),
 
     modifier: ($) =>
       choice(

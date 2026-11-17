@@ -4521,28 +4521,34 @@
       "type": "CHOICE",
       "members": [
         {
-          "type": "STRING",
-          "value": "clearscope"
+          "type": "PATTERN",
+          "value": "clearscope",
+          "flags": "i"
         },
         {
-          "type": "STRING",
-          "value": "virtualscope"
+          "type": "PATTERN",
+          "value": "virtualscope",
+          "flags": "i"
         },
         {
-          "type": "STRING",
-          "value": "play"
+          "type": "PATTERN",
+          "value": "play",
+          "flags": "i"
         },
         {
-          "type": "STRING",
-          "value": "ui"
+          "type": "PATTERN",
+          "value": "ui",
+          "flags": "i"
         },
         {
-          "type": "STRING",
-          "value": "action"
+          "type": "PATTERN",
+          "value": "action",
+          "flags": "i"
         },
         {
-          "type": "STRING",
-          "value": "norollback"
+          "type": "PATTERN",
+          "value": "norollback",
+          "flags": "i"
         }
       ]
     },
