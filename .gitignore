@@ -1,4 +1,5 @@
 *.exe
+*.pyc
 tmp/
 
 # Rust artifacts

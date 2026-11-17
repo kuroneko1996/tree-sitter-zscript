@@ -1,0 +1,30 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = [ "setuptools>=62.4.0", "wheel" ]
+
+[project]
+authors = [ { email = "20803349+kuroneko1996@users.noreply.github.com", name = "kuroneko1996" } ]
+classifiers = [
+  "Intended Audience :: Developers",
+  "Topic :: Software Development :: Compilers",
+  "Topic :: Text Processing :: Linguistic",
+  "Typing :: Typed",
+]
+description = "ZScript language for ZDoom"
+keywords = [ "incremental", "parsing", "tree-sitter", "zscript" ]
+license.text = "MIT"
+name = "tree-sitter-zscript"
+readme = "README.md"
+requires-python = ">=3.10"
+version = "0.1.0"
+
+[project.urls]
+Funding = "https://github.com/kuroneko1996"
+Homepage = "https://github.com/kuroneko1996/tree-sitter-zscript"
+
+[project.optional-dependencies]
+core = [ "tree-sitter~=0.24" ]
+
+[tool.cibuildwheel]
+build = "cp310-*"
+build-frontend = "build"
