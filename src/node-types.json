@@ -376,6 +376,10 @@
             "named": false
           },
           {
+            "type": "^",
+            "named": false
+          },
+          {
             "type": "is",
             "named": false
           },
@@ -1391,6 +1395,21 @@
     }
   },
   {
+    "type": "label_identifier",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "map_type",
     "named": true,
     "fields": {
@@ -1732,7 +1751,7 @@
     "named": true,
     "fields": {
       "label": {
-        "multiple": false,
+        "multiple": true,
         "required": true,
         "types": [
           {
@@ -2311,6 +2330,10 @@
     "named": false
   },
   {
+    "type": "^",
+    "named": false
+  },
+  {
     "type": "^=",
     "named": false
   },
@@ -2456,10 +2479,6 @@
     "named": false
   },
   {
-    "type": "label_identifier",
-    "named": true
-  },
-  {
     "type": "let",
     "named": false
   },
@@ -2470,6 +2489,10 @@
   {
     "type": "name_literal",
     "named": true
+  },
+  {
+    "type": "norollback",
+    "named": false
   },
   {
     "type": "number_literal",

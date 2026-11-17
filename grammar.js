@@ -253,7 +253,16 @@ export default grammar({
       ),
 
     state_label: ($) =>
-      seq(field("label", alias($.identifier, $.label_identifier)), ":"),
+      seq(
+        field(
+          "label",
+          alias(
+            seq($.identifier, repeat(seq(".", $.identifier))),
+            $.label_identifier,
+          ),
+        ),
+        ":",
+      ),
 
     const_declaration: ($) => alias($.const_definition, $.const_declaration),
 
@@ -507,8 +516,11 @@ export default grammar({
         [ZPREC.MULT, "*"],
         [ZPREC.MULT, "/"],
         [ZPREC.MULT, "%"],
+        [ZPREC.MULT, /dot/i],
+        [ZPREC.MULT, /cross/i],
         [ZPREC.BITWISE, "|"],
         [ZPREC.BITWISE, "&"],
+        [ZPREC.BITWISE, "^"],
         [ZPREC.BITWISE, "<<"],
         [ZPREC.BITWISE, ">>"],
         [ZPREC.COMPARE, "<"],
@@ -690,11 +702,13 @@ export default grammar({
         ),
       ),
 
-    scope: ($) => choice("clearscope", "virtualscope", "play", "ui", "action"),
+    scope: ($) => choice("clearscope", "virtualscope", "play", "ui", "action", "norollback"),
 
     modifier: ($) =>
       choice(
         /abstract/i,
+        /final/i,
+        /sealed/i,
         /virtual/i,
         /override/i,
         alias(/static/i, "_static"),

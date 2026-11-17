@@ -1435,8 +1435,29 @@
           "content": {
             "type": "ALIAS",
             "content": {
-              "type": "SYMBOL",
-              "name": "identifier"
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "identifier"
+                },
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": "."
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "identifier"
+                      }
+                    ]
+                  }
+                }
+              ]
             },
             "named": true,
             "value": "label_identifier"
@@ -2854,6 +2875,82 @@
         },
         {
           "type": "PREC_LEFT",
+          "value": 3,
+          "content": {
+            "type": "PREC_DYNAMIC",
+            "value": 2,
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "FIELD",
+                  "name": "left",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_expression"
+                  }
+                },
+                {
+                  "type": "FIELD",
+                  "name": "operator",
+                  "content": {
+                    "type": "PATTERN",
+                    "value": "dot",
+                    "flags": "i"
+                  }
+                },
+                {
+                  "type": "FIELD",
+                  "name": "right",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_expression"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "PREC_LEFT",
+          "value": 3,
+          "content": {
+            "type": "PREC_DYNAMIC",
+            "value": 2,
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "FIELD",
+                  "name": "left",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_expression"
+                  }
+                },
+                {
+                  "type": "FIELD",
+                  "name": "operator",
+                  "content": {
+                    "type": "PATTERN",
+                    "value": "cross",
+                    "flags": "i"
+                  }
+                },
+                {
+                  "type": "FIELD",
+                  "name": "right",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_expression"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "PREC_LEFT",
           "value": 4,
           "content": {
             "type": "PREC_DYNAMIC",
@@ -2912,6 +3009,43 @@
                   "content": {
                     "type": "STRING",
                     "value": "&"
+                  }
+                },
+                {
+                  "type": "FIELD",
+                  "name": "right",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_expression"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "PREC_LEFT",
+          "value": 4,
+          "content": {
+            "type": "PREC_DYNAMIC",
+            "value": 2,
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "FIELD",
+                  "name": "left",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_expression"
+                  }
+                },
+                {
+                  "type": "FIELD",
+                  "name": "operator",
+                  "content": {
+                    "type": "STRING",
+                    "value": "^"
                   }
                 },
                 {
@@ -4279,6 +4413,10 @@
         {
           "type": "STRING",
           "value": "action"
+        },
+        {
+          "type": "STRING",
+          "value": "norollback"
         }
       ]
     },
@@ -4288,6 +4426,16 @@
         {
           "type": "PATTERN",
           "value": "abstract",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "final",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "sealed",
           "flags": "i"
         },
         {
