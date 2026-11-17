@@ -227,13 +227,21 @@ export default grammar({
         alias(/states/i, "_states"),
         "{",
         repeat(
-          seq(
-            field("label", alias(/\w+:/, $.label_identifier)),
-            repeat($._states_statement),
+          choice(
+            $.state_label,
+            $.frame_statement,
+            $.control_statement,
           ),
         ),
         "}",
       ),
+
+    state_label: ($) =>
+      seq(
+        field("label", alias($.identifier, $.label_identifier)),
+        ":",
+      ),
+
 
     const_declaration: ($) => alias($.const_definition, $.const_declaration),
 

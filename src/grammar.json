@@ -1124,27 +1124,19 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "SEQ",
+            "type": "CHOICE",
             "members": [
               {
-                "type": "FIELD",
-                "name": "label",
-                "content": {
-                  "type": "ALIAS",
-                  "content": {
-                    "type": "PATTERN",
-                    "value": "\\w+:"
-                  },
-                  "named": true,
-                  "value": "label_identifier"
-                }
+                "type": "SYMBOL",
+                "name": "state_label"
               },
               {
-                "type": "REPEAT",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "_states_statement"
-                }
+                "type": "SYMBOL",
+                "name": "frame_statement"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "control_statement"
               }
             ]
           }
@@ -1152,6 +1144,28 @@
         {
           "type": "STRING",
           "value": "}"
+        }
+      ]
+    },
+    "state_label": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "label",
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "identifier"
+            },
+            "named": true,
+            "value": "label_identifier"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ":"
         }
       ]
     },

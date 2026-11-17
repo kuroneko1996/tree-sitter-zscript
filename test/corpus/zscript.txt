@@ -107,14 +107,16 @@ class CustomMonster : Actor {
       (default_declaration_flag
         (identifier)))
     (states_declaration
-      label: (label_identifier)
+      (state_label
+        label: (label_identifier))
       (frame_statement
         sprite: (frame_sprite
           (number_literal))
         action: (identifier))
       (control_statement
         keyword: (identifier))
-      label: (label_identifier)
+      (state_label
+        label: (label_identifier))
       (frame_statement
         sprite: (frame_sprite
           (number_literal))

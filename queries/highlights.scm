@@ -27,7 +27,7 @@
 	(identifier) @variable.parameter)
 
 
-(states_declaration label: (label_identifier) @type)
+(state_label label: (label_identifier) @type)
 (frame_statement sprite: (frame_sprite (frame_random_tic "_frame_random_tic_func" @keyword)))
 (frame_statement keyword: (frame_keyword) @keyword)
 (frame_statement action: (identifier) @function)

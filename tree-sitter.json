@@ -21,20 +21,20 @@
       {
         "name": "kuroneko1996",
         "email": "20803349+kuroneko1996@users.noreply.github.com",
-        "url": ""
+        "url": "http://example.com"
       }
     ],
     "links": {
       "repository": "https://github.com/tree-sitter/tree-sitter-zscript",
-      "funding": ""
+      "funding": "http://example.com"
     }
   },
   "bindings": {
-    "c": true,
+    "c": false,
     "go": false,
     "java": false,
     "node": false,
-    "python": false,
+    "python": true,
     "rust": false,
     "swift": false,
     "zig": false
