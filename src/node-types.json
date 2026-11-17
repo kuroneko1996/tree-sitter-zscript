@@ -1186,6 +1186,16 @@
     "type": "frame_statement",
     "named": true,
     "fields": {
+      "action": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
       "keyword": {
         "multiple": true,
         "required": false,

@@ -13,6 +13,7 @@
 (states_declaration label: (label_identifier) @type)
 (frame_statement sprite: (frame_sprite (frame_random_tic "_frame_random_tic_func" @keyword)))
 (frame_statement keyword: (frame_keyword) @keyword)
+(frame_statement action: (identifier) @function)
 (control_statement keyword: (identifier) @keyword)
 
 (enum_declaration name: (identifier) @type)

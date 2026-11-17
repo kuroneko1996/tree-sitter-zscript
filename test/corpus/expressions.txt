@@ -1,0 +1,163 @@
+==================
+Vectors, string concatenation and name literals
+==================
+
+class MathTest : Object {
+    void Test() {
+        vector3 pos = (10.5, -20, 30);
+        vector2 dir = (1, 0);
+        string msg = "\cgHealth: " .. 100 .. "\c-";
+        name tag = 'MyCustomTag';
+        let autoVar = true ? pos.x : 0;
+    }
+}
+
+---
+
+(source_file
+  (class_definition
+    name: (identifier)
+    inherit: (identifier)
+    (method_declaration
+      type: (predefined_type)
+      name: (identifier)
+      (parameter_list)
+      (block
+        (declaration_statement
+          type: (class_type)
+          (assignment_expression
+            left: (identifier)
+            right: (vector_expression
+              x: (number_literal)
+              y: (prefix_unary_expression
+                (number_literal))
+              z: (number_literal))))
+        (declaration_statement
+          type: (class_type)
+          (assignment_expression
+            left: (identifier)
+            right: (vector_expression
+              x: (number_literal)
+              y: (number_literal))))
+        (declaration_statement
+          type: (predefined_type)
+          (assignment_expression
+            left: (identifier)
+            right: (string_concat_expression
+              (string_concat_expression
+                (string_literal
+                  (colour_escape_sequence))
+                (number_literal))
+              (string_literal
+                (colour_escape_sequence)))))
+        (declaration_statement
+          type: (class_type)
+          (assignment_expression
+            left: (identifier)
+            right: (name_literal)))
+        (declaration_statement
+          (assignment_expression
+            left: (identifier)
+            right: (ternary_expression
+              condition: (boolean_literal)
+              consequence: (member_access_expression
+                (identifier)
+                member: (identifier))
+              alternative: (number_literal))))))))
+
+==================
+Foreach loop, Map and named function arguments
+==================
+
+class InventoryHandler : Thinker {
+    Map<String, int> items;
+
+    void Process() {
+        foreach (item : items) {
+            A_SpawnItemEx("HealthBonus", xofs: 16, flags: SXF_NOCHECKPOSITION);
+        }
+    }
+}
+
+---
+
+(source_file
+  (class_definition
+    name: (identifier)
+    inherit: (identifier)
+    (variable_declaration
+      type: (map_type
+        type: (predefined_type)
+        type: (predefined_type))
+      name: (identifier))
+    (method_declaration
+      type: (predefined_type)
+      name: (identifier)
+      (parameter_list)
+      (block
+        (foreach_statement
+          left: (identifier)
+          right: (identifier)
+          body: (block
+            (generic_statement
+              (function_expression
+                function: (identifier)
+                argument: (string_literal)
+                argument: (identifier)
+                argument: (number_literal)
+                argument: (identifier)
+                argument: (identifier)))))))))
+
+==================
+Enums, constants and structs
+==================
+
+enum EWeaponState {
+    WS_READY = 0,
+    WS_FIRE,
+    WS_RELOAD = 0x10
+}
+
+struct DamageInfo {
+    int amount;
+    name damagetype;
+}
+
+class DamageHelper {
+    const MAX_DAMAGE = 999;
+    static const int FLAGS[] = { 1, 2, 4 };
+}
+
+---
+
+(source_file
+  (enum_declaration
+    name: (identifier)
+    (enum_declaration_value
+      name: (identifier)
+      value: (number_literal))
+    (enum_declaration_value
+      name: (identifier))
+    (enum_declaration_value
+      name: (identifier)
+      value: (hex_literal)))
+  (struct_definition
+    name: (identifier)
+    (variable_declaration
+      type: (predefined_type)
+      name: (identifier))
+    (variable_declaration
+      type: (class_type)
+      name: (identifier)))
+  (class_definition
+    name: (identifier)
+    (const_definition
+      name: (identifier)
+      value: (number_literal))
+    (const_array_definition
+      type: (predefined_type)
+      name: (identifier)
+      contents: (const_array_expression
+        (number_literal)
+        (number_literal)
+        (number_literal)))))

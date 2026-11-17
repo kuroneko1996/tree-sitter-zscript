@@ -1,9 +1,3 @@
-/**
- * @file ZScript language from ZDoom
- * @author kuroneko1996 <20803349+kuroneko1996@users.noreply.github.com>
- * @license MIT
- */
-
 /// <reference types="tree-sitter-cli/dsl" />
 // @ts-check
 
@@ -575,7 +569,11 @@ export default grammar({
       seq(
         field("sprite", $.frame_sprite),
         field("keyword", repeat($.frame_keyword)),
-        choice(";", seq($.function_expression, ";"), $.block),
+        choice(
+          ";",
+          seq($.function_expression, ";"),
+          seq(field("action", $.identifier), ";"),
+          $.block),
       ),
     frame_sprite: ($) =>
       seq(
