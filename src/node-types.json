@@ -1567,6 +1567,10 @@
           "named": true
         },
         {
+          "type": "identifier",
+          "named": true
+        },
+        {
           "type": "version_modifier",
           "named": true
         }

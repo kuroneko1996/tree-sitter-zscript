@@ -733,7 +733,7 @@ export default grammar({
         /vararg/i,
         /latent/i,
         /meta/i,
-        /unsafe/i,
+        seq(/unsafe/i, "(", $.identifier, ")"),
         $.deprecated_modifier,
         $.version_modifier,
       ),

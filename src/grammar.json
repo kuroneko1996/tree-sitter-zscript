@@ -4626,9 +4626,26 @@
           "flags": "i"
         },
         {
-          "type": "PATTERN",
-          "value": "unsafe",
-          "flags": "i"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "unsafe",
+              "flags": "i"
+            },
+            {
+              "type": "STRING",
+              "value": "("
+            },
+            {
+              "type": "SYMBOL",
+              "name": "identifier"
+            },
+            {
+              "type": "STRING",
+              "value": ")"
+            }
+          ]
         },
         {
           "type": "SYMBOL",
