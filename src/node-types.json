@@ -136,6 +136,14 @@
         "named": true
       },
       {
+        "type": "const_array_definition",
+        "named": true
+      },
+      {
+        "type": "const_definition",
+        "named": true
+      },
+      {
         "type": "continue_statement",
         "named": true
       },
@@ -208,54 +216,12 @@
       {
         "type": "predefined_type",
         "named": true
+      },
+      {
+        "type": "readonly_type",
+        "named": true
       }
     ]
-  },
-  {
-    "type": "",
-    "named": false,
-    "fields": {
-      "contents": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "const_array_expression",
-            "named": true
-          }
-        ]
-      },
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "type": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "_type",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "subscript_token",
-          "named": true
-        }
-      ]
-    }
   },
   {
     "type": "access_level",
@@ -596,7 +562,52 @@
   {
     "type": "const_array_declaration",
     "named": true,
-    "fields": {}
+    "fields": {
+      "contents": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "const_array_expression",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "_type",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "const_array_declaration",
+          "named": true
+        },
+        {
+          "type": "subscript_token",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "const_array_definition",
@@ -1404,6 +1415,10 @@
             "named": true
           },
           {
+            "type": "predefined_type",
+            "named": true
+          },
+          {
             "type": "subscript_expression",
             "named": true
           }
@@ -1646,6 +1661,22 @@
         "types": [
           {
             "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "readonly_type",
+    "named": true,
+    "fields": {
+      "type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_type",
             "named": true
           }
         ]
@@ -2406,6 +2437,10 @@
   },
   {
     "type": "let",
+    "named": false
+  },
+  {
+    "type": "modifier",
     "named": false
   },
   {

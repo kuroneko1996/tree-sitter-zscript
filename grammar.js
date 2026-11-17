@@ -20,7 +20,6 @@ export default grammar({
 
   conflicts: ($) => [
     [$._left_expression, $._class_type],
-    [$.variable_declaration, $._class_type],
     [$.default_declaration_flag, $._expression],
     [$.default_declaration_value, $._expression],
     [$.vector_expression, $.typecast_expression],
@@ -136,7 +135,7 @@ export default grammar({
         repeat(choice($.scope, $.modifier, $.access_level)),
         optional("@"),
         field("type", $._type),
-        repeat(seq(optional(","), field("type", $._type))),
+        repeat(seq(",", optional("@"), field("type", $._type))),
         field("name", $.identifier),
         $.parameter_list,
         optional(alias(/const/i, "_const")),
@@ -237,7 +236,8 @@ export default grammar({
         optional(","),
       ),
 
-    const_array_declaration: ($) => alias($.const_array_definition, ""),
+      const_array_declaration: ($) =>
+        alias($.const_array_definition, $.const_array_declaration),
 
     states_declaration: ($) =>
       seq(
@@ -263,6 +263,7 @@ export default grammar({
         $.array_type,
         $.map_type,
         $.function_type,
+        $.readonly_type,
       ),
 
     predefined_type: ($) =>
@@ -344,6 +345,8 @@ export default grammar({
         $.foreach_statement,
         $.declaration_statement,
         $.generic_statement,
+        $.const_definition,
+        $.const_array_definition,
       ),
 
     return_statement: ($) =>
@@ -474,12 +477,12 @@ export default grammar({
       choice($.member_access_expression, $.subscript_expression, $.identifier),
 
     member_access_expression: ($) =>
-      prec(
+      prec.left(
         ZPREC.DOT,
         seq(
           choice($._expression, $.predefined_type),
           ".",
-          field("member", $._left_expression),
+          field("member", choice($._left_expression, $.predefined_type)),
         ),
       ),
 

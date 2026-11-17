@@ -552,11 +552,15 @@
             "type": "SEQ",
             "members": [
               {
+                "type": "STRING",
+                "value": ","
+              },
+              {
                 "type": "CHOICE",
                 "members": [
                   {
                     "type": "STRING",
-                    "value": ","
+                    "value": "@"
                   },
                   {
                     "type": "BLANK"
@@ -1322,8 +1326,8 @@
         "type": "SYMBOL",
         "name": "const_array_definition"
       },
-      "named": false,
-      "value": ""
+      "named": true,
+      "value": "const_array_declaration"
     },
     "states_declaration": {
       "type": "SEQ",
@@ -1486,6 +1490,10 @@
         {
           "type": "SYMBOL",
           "name": "function_type"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "readonly_type"
         }
       ]
     },
@@ -1873,6 +1881,14 @@
         {
           "type": "SYMBOL",
           "name": "generic_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "const_definition"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "const_array_definition"
         }
       ]
     },
@@ -2514,7 +2530,7 @@
       ]
     },
     "member_access_expression": {
-      "type": "PREC",
+      "type": "PREC_LEFT",
       "value": 18,
       "content": {
         "type": "SEQ",
@@ -2540,8 +2556,17 @@
             "type": "FIELD",
             "name": "member",
             "content": {
-              "type": "SYMBOL",
-              "name": "_left_expression"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_left_expression"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "predefined_type"
+                }
+              ]
             }
           }
         ]
@@ -4562,10 +4587,6 @@
   "conflicts": [
     [
       "_left_expression",
-      "_class_type"
-    ],
-    [
-      "variable_declaration",
       "_class_type"
     ],
     [
