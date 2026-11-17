@@ -23,6 +23,7 @@ export default grammar({
     [$.variable_declaration, $._class_type],
     [$.default_declaration_flag, $._expression],
     [$.default_declaration_value, $._expression],
+    [$.vector_expression, $.typecast_expression],
   ],
 
   supertypes: ($) => [$._definition, $._statement, $._expression, $._type],
@@ -85,25 +86,31 @@ export default grammar({
       ),
 
     const_definition: ($) =>
-      seq(
-        alias(/const/i, "_const"),
-        field("name", $.identifier),
-        "=",
-        field("value", $._expression),
-        ";",
+      prec(
+        2,
+        seq(
+          alias(/const/i, "_const"),
+          field("name", $.identifier),
+          "=",
+          field("value", $._expression),
+          ";",
+        ),
       ),
 
     const_array_definition: ($) =>
-      seq(
-        optional(alias(/static/i, "_static")),
-        alias(/const/i, "_const"),
-        field("type", $._type),
-        optional("[]"),
-        field("name", $.identifier),
-        optional("[]"),
-        "=",
-        field("contents", $.const_array_expression),
-        ";",
+      prec(
+        2,
+        seq(
+          optional(alias(/static/i, "_static")),
+          alias(/const/i, "_const"),
+          field("type", $._type),
+          optional($.subscript_token),
+          field("name", $.identifier),
+          optional($.subscript_token),
+          "=",
+          field("contents", $.const_array_expression),
+          ";",
+        ),
       ),
 
     _struct_declaration: ($) =>
@@ -127,6 +134,7 @@ export default grammar({
     method_declaration: ($) =>
       seq(
         repeat(choice($.scope, $.modifier, $.access_level)),
+        optional("@"),
         field("type", $._type),
         repeat(seq(optional(","), field("type", $._type))),
         field("name", $.identifier),
@@ -187,7 +195,7 @@ export default grammar({
 
     property_declaration: ($) =>
       seq(
-        "property",
+        alias(/property/i, "property"),
         field("name", $.identifier),
         ":",
         field("variable", $.identifier),
@@ -201,14 +209,10 @@ export default grammar({
         alias(/default/i, "_default"),
         "{",
         repeat(
-          seq(
-            choice(
-              $.default_declaration_flag,
-              $.default_declaration_value,
-              alias(/projectile/i, "_projectile"),
-              alias(/monster/i, "_monster"),
-            ),
-            optional(";"),
+          choice(
+            seq($.default_declaration_flag, optional(";")),
+            seq($.default_declaration_value, ";"),
+            seq($._left_expression, ";"),
           ),
         ),
         "}",
@@ -238,6 +242,7 @@ export default grammar({
     states_declaration: ($) =>
       seq(
         alias(/states/i, "_states"),
+        optional(seq("(", $.identifier, repeat(seq(",", $.identifier)), ")")),
         "{",
         repeat(choice($.state_label, $.frame_statement, $.control_statement)),
         "}",
@@ -261,11 +266,37 @@ export default grammar({
       ),
 
     predefined_type: ($) =>
-      choice(/int/i, /float/i, /double/i, /string/i, /bool/i, /void/i),
+      choice(
+        /int8/i,
+        /uint8/i,
+        /int16/i,
+        /uint16/i,
+        /int/i,
+        /uint/i,
+        /float/i,
+        /double/i,
+        /string/i,
+        /bool/i,
+        /void/i,
+        /color/i,
+      ),
 
     _class_type: ($) => alias($.identifier, $.class_type),
     classname_type: ($) =>
       seq(alias(/class/i, "_class"), "<", field("type", $._type), ">"),
+
+    readonly_type: ($) =>
+      prec(
+        2,
+        seq(
+          alias(/readonly/i, "modifier"),
+          "<",
+          optional("@"),
+          field("type", $._type),
+          ">",
+        ),
+      ),
+
     array_type: ($) =>
       seq(
         alias(/array/i, "_array"),
@@ -325,18 +356,23 @@ export default grammar({
     continue_statement: ($) => seq("continue", ";"),
     break_statement: ($) => seq("break", ";"),
 
-    declaration_statement: ($) =>
-      seq(
-        choice(field("type", $._type), "let"),
-        choice(
-          seq(
-            field("name", $._left_expression),
-            repeat(seq(",", field("name", $._left_expression))),
-          ),
-          $.assignment_expression,
+    declaration_statement: ($) => {
+      const decl_item = choice(
+        $.assignment_expression,
+        field("name", $._left_expression),
+      );
+
+      return choice(
+        seq(
+          optional("@"),
+          field("type", $._type),
+          decl_item,
+          repeat(seq(",", decl_item)),
+          ";",
         ),
-        ";",
-      ),
+        seq(alias(/let/i, "let"), $.assignment_expression, ";"),
+      );
+    },
 
     if_statement: ($) =>
       prec.left(
@@ -539,7 +575,6 @@ export default grammar({
     _function_expression_argument: ($) =>
       seq(field("name", optional(seq($.identifier, ":"))), $._expression),
 
-    // because function expression can't pick up typecasting sometimes
     typecast_expression: ($) =>
       prec(
         ZPREC.FUNCTION,
@@ -547,6 +582,7 @@ export default grammar({
           choice(seq("(", field("type", $._type), ")"), field("type", $._type)),
           "(",
           field("target", $._expression),
+          repeat(seq(",", field("target", $._expression))),
           ")",
         ),
       ),
@@ -645,16 +681,9 @@ export default grammar({
     control_statement: ($) =>
       seq(
         field("keyword", $.identifier),
-        // alias(choice(
-        // 	'loop', 'LOOP', 'Loop',
-        // 	'stop', 'STOP', 'Stop',
-        // 	'wait', 'WAIT', 'Wait',
-        // 	'fail', 'FAIL', 'Fail',
-        // 	seq(choice('goto', 'GOTO', 'Goto'), $._expression),
-        // ), $.control_keyword),
         optional(
           choice(
-            seq(alias(/super/i, "_super"), "::", $.identifier),
+            seq(alias(/super/i, "_super"), "::", $._expression),
             $._expression,
           ),
         ),
@@ -673,17 +702,19 @@ export default grammar({
         /native/i,
         /readonly/i,
         /internal/i,
+        /vararg/i,
+        /latent/i,
+        /meta/i,
         $.deprecated_modifier,
         $.version_modifier,
       ),
 
     deprecated_modifier: ($) =>
       seq(
-        /deprecated/i,
+        alias(/deprecated/i, "deprecated"),
         "(",
-        field("version", $._literal),
-        ",",
-        field("warning", $._literal),
+        field("version", $.string_literal),
+        optional(seq(",", field("warning", $.string_literal))),
         ")",
       ),
 
@@ -738,7 +769,7 @@ export default grammar({
           /\d+\.\d*([eE][+-]?\d+)?[fF]?/,
           /\.\d+([eE][+-]?\d+)?[fF]?/,
           /\d+[eE][+-]?\d+[fF]?/,
-          /\d+[fF]?/,
+          /\d+[uUfF]?/,
         ),
       ),
 

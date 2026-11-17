@@ -71,8 +71,6 @@
 	"_states"
 	"_default"
 	"_super"
-	"_projectile"
-	"_monster"
 ] @keyword
 
 [
