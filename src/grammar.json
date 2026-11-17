@@ -707,17 +707,8 @@
                                 "type": "FIELD",
                                 "name": "name",
                                 "content": {
-                                  "type": "CHOICE",
-                                  "members": [
-                                    {
-                                      "type": "SYMBOL",
-                                      "name": "identifier"
-                                    },
-                                    {
-                                      "type": "SYMBOL",
-                                      "name": "predefined_type"
-                                    }
-                                  ]
+                                  "type": "SYMBOL",
+                                  "name": "identifier"
                                 }
                               },
                               {
@@ -804,17 +795,8 @@
                                       "type": "FIELD",
                                       "name": "name",
                                       "content": {
-                                        "type": "CHOICE",
-                                        "members": [
-                                          {
-                                            "type": "SYMBOL",
-                                            "name": "identifier"
-                                          },
-                                          {
-                                            "type": "SYMBOL",
-                                            "name": "predefined_type"
-                                          }
-                                        ]
+                                        "type": "SYMBOL",
+                                        "name": "identifier"
                                       }
                                     },
                                     {
@@ -1605,11 +1587,6 @@
         {
           "type": "PATTERN",
           "value": "void",
-          "flags": "i"
-        },
-        {
-          "type": "PATTERN",
-          "value": "color",
           "flags": "i"
         }
       ]
@@ -2650,10 +2627,6 @@
         {
           "type": "SYMBOL",
           "name": "const_array_expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "predefined_type"
         },
         {
           "type": "SYMBOL",
@@ -4961,10 +4934,6 @@
     [
       "vector_expression",
       "typecast_expression"
-    ],
-    [
-      "_type",
-      "_nonleft_expression"
     ]
   ],
   "precedences": [],
