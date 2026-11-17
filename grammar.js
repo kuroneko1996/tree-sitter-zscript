@@ -216,7 +216,11 @@ export default grammar({
         ),
         "}",
       ),
-    default_declaration_flag: ($) => seq(choice("+", "-"), $._left_expression),
+    default_declaration_flag: ($) =>
+      prec(
+        1,
+        seq(choice("+", "-"), choice($._left_expression, $.predefined_type)),
+      ),
     default_declaration_value: ($) =>
       seq($._left_expression, $._expression, repeat(seq(",", $._expression))),
 
@@ -632,26 +636,12 @@ export default grammar({
           $.block,
         ),
       ),
-      frame_sprite: ($) =>
-        seq(
-          choice(
-            $.identifier,
-            '"----"',
-            "----",
-            '"####"',
-            "####",
-          ),
-          choice(
-            token(/[\w\[\]\\]+/),
-            /#+/,
-          ),
-          choice(
-            seq(optional("-"), $.number_literal),
-            $.frame_random_tic,
-          ),
-        ),
-
-
+    frame_sprite: ($) =>
+      seq(
+        choice($.identifier, '"----"', "----", '"####"', "####"),
+        choice(token(/[\w\[\]\\]+/), /#+/),
+        choice(seq(optional("-"), $.number_literal), $.frame_random_tic),
+      ),
 
     frame_random_tic: ($) =>
       seq(
@@ -681,22 +671,24 @@ export default grammar({
         seq(/light/i, "(", field("light", $._expression), ")"),
       ),
 
-      control_statement: ($) =>
-        choice(
-          seq(
-            field("keyword", alias(token(prec(1, /loop|stop|wait|fail/i)), $.identifier)),
-            ";",
+    control_statement: ($) =>
+      choice(
+        seq(
+          field(
+            "keyword",
+            alias(token(prec(1, /loop|stop|wait|fail/i)), $.identifier),
           ),
-          seq(
-            field("keyword", alias(token(prec(1, /goto/i)), $.identifier)),
-            choice(
-              seq(alias(token(prec(1, /super/i)), "_super"), "::", $._expression),
-              $._expression,
-            ),
-            ";",
-          ),
+          ";",
         ),
-
+        seq(
+          field("keyword", alias(token(prec(1, /goto/i)), $.identifier)),
+          choice(
+            seq(alias(token(prec(1, /super/i)), "_super"), "::", $._expression),
+            $._expression,
+          ),
+          ";",
+        ),
+      ),
 
     scope: ($) => choice("clearscope", "virtualscope", "play", "ui", "action"),
 

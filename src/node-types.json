@@ -855,6 +855,10 @@
           "named": true
         },
         {
+          "type": "predefined_type",
+          "named": true
+        },
+        {
           "type": "subscript_expression",
           "named": true
         }
