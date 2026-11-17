@@ -8,16 +8,16 @@
 // @ts-check
 
 const ZPREC = {
-	DOT: 18,
-	FUNCTION: 8,
-	POSTFIX: 7,
-	PREFIX: 6,
-	COMPARE: 5,
-	BITWISE: 4,
-	MULT: 3,
-	ADD: 2,
-	LOGIC: 1,
-}
+  DOT: 18,
+  FUNCTION: 8,
+  POSTFIX: 7,
+  PREFIX: 6,
+  COMPARE: 5,
+  BITWISE: 4,
+  MULT: 3,
+  ADD: 2,
+  LOGIC: 1,
+};
 
 export default grammar({
   name: "zscript",
@@ -25,9 +25,6 @@ export default grammar({
   extras: ($) => [$.comment, /\s|\\\r?\n/],
 
   conflicts: ($) => [
-    [$.function_expression, $.vector_expression],
-    [$._function_expression_argument, $.vector_expression],
-    [$._function_expression_argument, $.parenthesized_expression],
     [$._left_expression, $._class_type],
     [$.variable_declaration, $._class_type],
     [$.default_declaration_flag, $._expression],
@@ -137,15 +134,20 @@ export default grammar({
     parameter_list: ($) =>
       seq(
         "(",
-        field(
-          "parameter",
-          repeat(
-            seq(
-              optional(repeat(alias(/(out)|(in)/i, "_param_scope"))),
-              field("type", $._type),
-              field("name", $.identifier),
-              field("default_value", optional(seq("=", $._expression))),
-              optional(","),
+        optional(
+          choice(
+            alias(/void/i, $.predefined_type),
+            field(
+              "parameter",
+              repeat1(
+                seq(
+                  optional(repeat(alias(/(out)|(in)/i, "_param_scope"))),
+                  field("type", $._type),
+                  field("name", $.identifier),
+                  field("default_value", optional(seq("=", $._expression))),
+                  optional(","),
+                ),
+              ),
             ),
           ),
         ),

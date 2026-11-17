@@ -21,7 +21,7 @@
 	(name_literal)
 	(escape_sequence)
 	(colour_escape_sequence)
-] @constant.character.escape
+] @string.escape
 
 [
 	(predefined_type)
@@ -65,7 +65,7 @@
 
 [
 	(boolean_literal)
-] @constant.builtin.boolean
+] @boolean
 
 [
 	"do"
@@ -127,6 +127,6 @@
 ] @operator
 
 (string_literal) @string
-(number_literal) @constant.numeric
+(number_literal) @number
 
 (comment) @comment
