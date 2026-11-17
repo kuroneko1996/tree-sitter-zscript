@@ -266,7 +266,9 @@ export default grammar({
 
     const_declaration: ($) => alias($.const_definition, $.const_declaration),
 
-    block: ($) => seq("{", repeat($._statement), "}"),
+    empty_statement: ($) => ";",
+
+    block: ($) => seq("{", repeat(choice($._statement, $.empty_statement)), "}"),
 
     _type: ($) =>
       choice(
@@ -434,8 +436,7 @@ export default grammar({
         "while",
         "(",
         field("condition", $._expression),
-        ")",
-        optional(";"),
+        ")"
       ),
 
       for_statement: ($) => {

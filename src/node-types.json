@@ -424,6 +424,10 @@
         {
           "type": "_statement",
           "named": true
+        },
+        {
+          "type": "empty_statement",
+          "named": true
         }
       ]
     }
@@ -944,6 +948,11 @@
         ]
       }
     }
+  },
+  {
+    "type": "empty_statement",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "enum_declaration",
