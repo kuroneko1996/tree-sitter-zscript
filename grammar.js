@@ -334,17 +334,21 @@ export default grammar({
         ">",
       ),
 
-    function_type: ($) =>
-      seq(
-        alias(/function/i, "_function"),
-        "<",
-        field("scope", $.scope),
-        field("type", $._type),
-        "(",
-        optional(seq($._type, repeat(seq(optional(","), $._type)))),
-        ")",
-        ">",
-      ),
+      function_type: ($) =>
+        seq(
+          alias(/function/i, "_function"),
+          "<",
+          optional(field("scope", $.scope)),
+          field("type", $._type),
+          optional(
+            seq(
+              "(",
+              optional(seq($._type, repeat(seq(optional(","), $._type)))),
+              ")",
+            ),
+          ),
+          ">",
+        ),
 
     _statement: ($) =>
       choice(
