@@ -19,6 +19,7 @@
 		(predefined_type)
 		(class_type)
 		(classname_type)
+		(readonly_type)
 		(array_type)
 		(map_type)
 		(function_type)
@@ -84,12 +85,10 @@
 	(boolean_literal)
 ] @boolean
 
-[
-	"do"
-	"while"
-	"for"
-	"foreach"
-] @keyword.control.repeat
+(while_statement . (_) @keyword.control.repeat)
+(do_while_statement . (_) @keyword.control.repeat)
+(for_statement . (_) @keyword.control.repeat)
+(foreach_statement . (_) @keyword.control.repeat)
 
 [
 	"_if"
@@ -98,10 +97,8 @@
 	"_case"
 ] @keyword.control.conditional
 
-[
-	"continue"
-	"break"
-] @keyword.control
+(continue_statement) @keyword.control
+(break_statement) @keyword.control
 
 "_return" @keyword.control.return
 
@@ -120,8 +117,7 @@
 	"-"
 	"*"
 	"/"
-	"%",
-	"**",
+	"%"
 	"|"
 	"^"
 	"&"
@@ -134,9 +130,6 @@
 	"=="
 	"!="
 	"~=="
-	"is"
-	"dot"
-	"cross"
 	"&&"
 	"||"
 	"--"
@@ -151,3 +144,4 @@
 (number_literal) @number
 
 (comment) @comment
+(binary_expression operator: (_) @operator)
