@@ -301,7 +301,7 @@ export default grammar({
 
     _class_type: ($) => alias($.identifier, $.class_type),
     classname_type: ($) =>
-      seq(alias(/class/i, "_class"), "<", field("type", $._type), ">"),
+      seq(alias(/class/i, "_class"), optional(seq("<", field("type", $._type), ">"))),
 
     readonly_type: ($) =>
       prec(
