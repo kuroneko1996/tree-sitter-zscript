@@ -23,6 +23,7 @@ export default grammar({
     [$.default_declaration_flag, $._expression],
     [$.default_declaration_value, $._expression],
     [$.vector_expression, $.typecast_expression],
+    [$._left_expression, $.predefined_type],
   ],
 
   supertypes: ($) => [$._definition, $._statement, $._expression, $._type],
@@ -295,6 +296,7 @@ export default grammar({
         /string/i,
         /bool/i,
         /void/i,
+        /voidptr/i,
       ),
 
     _class_type: ($) => alias($.identifier, $.class_type),
@@ -492,7 +494,12 @@ export default grammar({
       ),
 
     _left_expression: ($) =>
-      choice($.member_access_expression, $.subscript_expression, $.identifier),
+      choice(
+        $.member_access_expression,
+        $.subscript_expression,
+        $.identifier,
+        alias(/string/i, $.identifier),
+      ),
 
     member_access_expression: ($) =>
       prec.left(

@@ -1601,6 +1601,11 @@
           "type": "PATTERN",
           "value": "void",
           "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "voidptr",
+          "flags": "i"
         }
       ]
     },
@@ -2649,6 +2654,16 @@
         {
           "type": "SYMBOL",
           "name": "identifier"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "string",
+            "flags": "i"
+          },
+          "named": true,
+          "value": "identifier"
         }
       ]
     },
@@ -5004,6 +5019,10 @@
     [
       "vector_expression",
       "typecast_expression"
+    ],
+    [
+      "_left_expression",
+      "predefined_type"
     ]
   ],
   "precedences": [],
