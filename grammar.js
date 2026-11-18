@@ -722,7 +722,10 @@ export default grammar({
       choice(
         /abstract/i,
         /final/i,
-        /sealed/i,
+        seq(
+          /sealed/i,
+          optional(seq("(", $.identifier, repeat(seq(",", $.identifier)), ")")),
+        ),
         /virtual/i,
         /override/i,
         alias(/static/i, "_static"),
