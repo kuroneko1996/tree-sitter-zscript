@@ -301,7 +301,10 @@ export default grammar({
 
     _class_type: ($) => alias($.identifier, $.class_type),
     classname_type: ($) =>
-      seq(alias(/class/i, "_class"), optional(seq("<", field("type", $._type), ">"))),
+      seq(
+        alias(/class/i, "_class"),
+        optional(seq("<", field("type", $._type), ">")),
+      ),
 
     readonly_type: ($) =>
       prec(
@@ -334,21 +337,21 @@ export default grammar({
         ">",
       ),
 
-      function_type: ($) =>
-        seq(
-          alias(/function/i, "_function"),
-          "<",
-          optional(field("scope", $.scope)),
-          field("type", $._type),
-          optional(
-            seq(
-              "(",
-              optional(seq($._type, repeat(seq(optional(","), $._type)))),
-              ")",
-            ),
+    function_type: ($) =>
+      seq(
+        alias(/function/i, "_function"),
+        "<",
+        optional(field("scope", $.scope)),
+        field("type", $._type),
+        optional(
+          seq(
+            "(",
+            optional(seq($._type, repeat(seq(optional(","), $._type)))),
+            ")",
           ),
-          ">",
         ),
+        ">",
+      ),
 
     _statement: ($) =>
       choice(
@@ -429,7 +432,7 @@ export default grammar({
 
     while_statement: ($) =>
       seq(
-        "while",
+        alias(/while/i, "_while"),
         "(",
         field("condition", $._expression),
         ")",
@@ -438,9 +441,9 @@ export default grammar({
 
     do_while_statement: ($) =>
       seq(
-        "do",
+        alias(/do/i, "_do"),
         field("body", $._statement),
-        "while",
+        alias(/while/i, "_while"),
         "(",
         field("condition", $._expression),
         ")",
@@ -450,7 +453,7 @@ export default grammar({
       const expr_list = seq($._expression, repeat(seq(",", $._expression)));
 
       return seq(
-        /for/i,
+        alias(/for/i, "_for"),
         "(",
         field(
           "initializer",
@@ -466,7 +469,7 @@ export default grammar({
 
     foreach_statement: ($) =>
       seq(
-        "foreach",
+        alias(/foreach/i, "_foreach"),
         "(",
         field("left", $._expression),
         optional(seq(",", field("value", $._expression))),

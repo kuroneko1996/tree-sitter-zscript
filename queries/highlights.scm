@@ -85,11 +85,6 @@
 	(boolean_literal)
 ] @boolean
 
-(while_statement . (_) @keyword.control.repeat)
-(do_while_statement . (_) @keyword.control.repeat)
-(for_statement . (_) @keyword.control.repeat)
-(foreach_statement . (_) @keyword.control.repeat)
-
 [
 	"_if"
 	"_else"
@@ -101,6 +96,14 @@
 (break_statement) @keyword.control
 
 "_return" @keyword.control.return
+
+[
+	"_while"
+	"_do"
+	"_for"
+	"_foreach"
+] @keyword.control.repeat
+
 
 [
 	"="

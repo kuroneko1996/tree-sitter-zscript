@@ -2317,8 +2317,14 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
-          "value": "while"
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "while",
+            "flags": "i"
+          },
+          "named": false,
+          "value": "_while"
         },
         {
           "type": "STRING",
@@ -2350,8 +2356,14 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
-          "value": "do"
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "do",
+            "flags": "i"
+          },
+          "named": false,
+          "value": "_do"
         },
         {
           "type": "FIELD",
@@ -2362,8 +2374,14 @@
           }
         },
         {
-          "type": "STRING",
-          "value": "while"
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "while",
+            "flags": "i"
+          },
+          "named": false,
+          "value": "_while"
         },
         {
           "type": "STRING",
@@ -2387,9 +2405,14 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "PATTERN",
-          "value": "for",
-          "flags": "i"
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "for",
+            "flags": "i"
+          },
+          "named": false,
+          "value": "_for"
         },
         {
           "type": "STRING",
@@ -2525,8 +2548,14 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
-          "value": "foreach"
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "foreach",
+            "flags": "i"
+          },
+          "named": false,
+          "value": "_foreach"
         },
         {
           "type": "STRING",

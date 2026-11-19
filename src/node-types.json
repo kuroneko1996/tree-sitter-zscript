@@ -2401,6 +2401,10 @@
     "named": false
   },
   {
+    "type": "_do",
+    "named": false
+  },
+  {
     "type": "_else",
     "named": false
   },
@@ -2410,6 +2414,14 @@
   },
   {
     "type": "_extend",
+    "named": false
+  },
+  {
+    "type": "_for",
+    "named": false
+  },
+  {
+    "type": "_foreach",
     "named": false
   },
   {
@@ -2457,6 +2469,10 @@
     "named": false
   },
   {
+    "type": "_while",
+    "named": false
+  },
+  {
     "type": "break",
     "named": false
   },
@@ -2482,19 +2498,11 @@
     "named": false
   },
   {
-    "type": "do",
-    "named": false
-  },
-  {
     "type": "escape_sequence",
     "named": true
   },
   {
     "type": "flagdef",
-    "named": false
-  },
-  {
-    "type": "foreach",
     "named": false
   },
   {
@@ -2535,10 +2543,6 @@
   },
   {
     "type": "version",
-    "named": false
-  },
-  {
-    "type": "while",
     "named": false
   },
   {
