@@ -5,14 +5,14 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tree-sitter/tree-sitter-zscript.git"
+    "url": "git+https://github.com/kuroneko1996/tree-sitter-zscript.git"
   },
-  "funding": "",
+  "funding": "https://github.com/kuroneko1996",
   "license": "MIT",
   "author": {
     "name": "kuroneko1996",
     "email": "20803349+kuroneko1996@users.noreply.github.com",
-    "url": ""
+    "url": "https://github.com/kuroneko1996"
   },
   "main": "bindings/node",
   "types": "bindings/node",
