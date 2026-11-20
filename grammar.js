@@ -44,11 +44,18 @@ export default grammar({
         $.enum_declaration,
       ),
 
-    version_definition: ($) =>
-      seq(
-        "version",
-        field("version", choice($.number_literal, $.string_literal)),
-      ),
+      version_definition: ($) =>
+        seq(
+          alias(/version/i, "version"),
+          field(
+            "version",
+            choice(
+              token(prec(1, /\d+\.\d+\.\d+/)),
+              $.number_literal,
+              $.string_literal,
+            ),
+          ),
+        ),
 
     include_definition: ($) => seq(alias(/\#include/i, "_include"), field("path", $.string_literal)),
 
@@ -666,7 +673,11 @@ export default grammar({
     frame_sprite: ($) =>
       seq(
         choice($.identifier, '"----"', "----", '"####"', "####"),
-        choice(token(/[\w\[\]\\]+/), /#+/),
+        choice(
+          token(/[\w\[\]\\]+/),
+          /#+/,
+          token(seq('"', /[\w\[\]\\#]+/, '"')),
+        ),
         choice(seq(optional("-"), $.number_literal), $.frame_random_tic),
       ),
 

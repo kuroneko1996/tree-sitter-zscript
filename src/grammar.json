@@ -47,7 +47,13 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "version",
+            "flags": "i"
+          },
+          "named": false,
           "value": "version"
         },
         {
@@ -56,6 +62,17 @@
           "content": {
             "type": "CHOICE",
             "members": [
+              {
+                "type": "TOKEN",
+                "content": {
+                  "type": "PREC",
+                  "value": 1,
+                  "content": {
+                    "type": "PATTERN",
+                    "value": "\\d+\\.\\d+\\.\\d+"
+                  }
+                }
+              },
               {
                 "type": "SYMBOL",
                 "name": "number_literal"
@@ -4315,6 +4332,26 @@
             {
               "type": "PATTERN",
               "value": "#+"
+            },
+            {
+              "type": "TOKEN",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": "\""
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "[\\w\\[\\]\\\\#]+"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "\""
+                  }
+                ]
+              }
             }
           ]
         },
