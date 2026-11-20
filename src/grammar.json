@@ -470,11 +470,11 @@
         },
         {
           "type": "SYMBOL",
-          "name": "const_array_declaration"
+          "name": "const_array_definition"
         },
         {
           "type": "SYMBOL",
-          "name": "const_declaration"
+          "name": "const_definition"
         }
       ]
     },
@@ -1333,15 +1333,6 @@
         }
       ]
     },
-    "const_array_declaration": {
-      "type": "ALIAS",
-      "content": {
-        "type": "SYMBOL",
-        "name": "const_array_definition"
-      },
-      "named": true,
-      "value": "const_array_declaration"
-    },
     "states_declaration": {
       "type": "SEQ",
       "members": [
@@ -1468,15 +1459,6 @@
           "value": ":"
         }
       ]
-    },
-    "const_declaration": {
-      "type": "ALIAS",
-      "content": {
-        "type": "SYMBOL",
-        "name": "const_definition"
-      },
-      "named": true,
-      "value": "const_declaration"
     },
     "empty_statement": {
       "type": "STRING",

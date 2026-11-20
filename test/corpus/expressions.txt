@@ -151,16 +151,14 @@ class DamageHelper {
       name: (identifier)))
   (class_definition
     name: (identifier)
-    (const_declaration
-      (const_declaration
+    (const_definition
         name: (identifier)
-        value: (number_literal)))
-    (const_array_declaration
-      (const_array_declaration
+        value: (number_literal))
+    (const_array_definition
         type: (predefined_type)
         name: (identifier)
         (subscript_token)
         contents: (const_array_expression
-          (number_literal)
-          (number_literal)
-          (number_literal))))))
+            (number_literal)
+            (number_literal)
+            (number_literal)))))

@@ -118,8 +118,8 @@ export default grammar({
         $.method_declaration,
         $.variable_declaration,
         $.enum_declaration,
-        $.const_array_declaration,
-        $.const_declaration,
+        $.const_array_definition,
+        $.const_definition,
       ),
 
     _declaration: ($) =>
@@ -241,9 +241,6 @@ export default grammar({
         optional(","),
       ),
 
-    const_array_declaration: ($) =>
-      alias($.const_array_definition, $.const_array_declaration),
-
     states_declaration: ($) =>
       seq(
         alias(/states/i, "_states"),
@@ -264,8 +261,6 @@ export default grammar({
         ),
         ":",
       ),
-
-    const_declaration: ($) => alias($.const_definition, $.const_declaration),
 
     empty_statement: ($) => ";",
 
