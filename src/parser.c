@@ -22,7 +22,7 @@
 enum ts_symbol_identifiers {
   sym_identifier = 1,
   anon_sym_version = 2,
-  anon_sym_POUNDinclude = 3,
+  aux_sym_include_definition_token1 = 3,
   aux_sym_class_definition_token1 = 4,
   aux_sym_class_definition_token2 = 5,
   anon_sym_COLON = 6,
@@ -275,7 +275,7 @@ static const char * const ts_symbol_names[] = {
   [ts_builtin_sym_end] = "end",
   [sym_identifier] = "identifier",
   [anon_sym_version] = "version",
-  [anon_sym_POUNDinclude] = "#include",
+  [aux_sym_include_definition_token1] = "_include",
   [aux_sym_class_definition_token1] = "class_definition_token1",
   [aux_sym_class_definition_token2] = "_class",
   [anon_sym_COLON] = ":",
@@ -528,7 +528,7 @@ static const TSSymbol ts_symbol_map[] = {
   [ts_builtin_sym_end] = ts_builtin_sym_end,
   [sym_identifier] = sym_identifier,
   [anon_sym_version] = anon_sym_version,
-  [anon_sym_POUNDinclude] = anon_sym_POUNDinclude,
+  [aux_sym_include_definition_token1] = aux_sym_include_definition_token1,
   [aux_sym_class_definition_token1] = aux_sym_class_definition_token1,
   [aux_sym_class_definition_token2] = aux_sym_class_definition_token2,
   [anon_sym_COLON] = anon_sym_COLON,
@@ -790,7 +790,7 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
     .visible = true,
     .named = false,
   },
-  [anon_sym_POUNDinclude] = {
+  [aux_sym_include_definition_token1] = {
     .visible = true,
     .named = false,
   },
@@ -4320,7 +4320,8 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       END_STATE();
     case 29:
       if (lookahead == '#') ADVANCE(33);
-      if (lookahead == 'i') ADVANCE(62);
+      if (lookahead == 'I' ||
+          lookahead == 'i') ADVANCE(63);
       END_STATE();
     case 30:
       if (lookahead == '#') ADVANCE(151);
@@ -4444,30 +4445,37 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
           ('a' <= lookahead && lookahead <= 'z')) ADVANCE(56);
       END_STATE();
     case 57:
-      if (lookahead == 'c') ADVANCE(61);
-      END_STATE();
-    case 58:
-      if (lookahead == 'd') ADVANCE(59);
-      END_STATE();
-    case 59:
-      if (lookahead == 'e') ADVANCE(79);
-      END_STATE();
-    case 60:
-      if (lookahead == 'i') ADVANCE(62);
-      END_STATE();
-    case 61:
-      if (lookahead == 'l') ADVANCE(63);
-      END_STATE();
-    case 62:
-      if (lookahead == 'n') ADVANCE(57);
-      END_STATE();
-    case 63:
-      if (lookahead == 'u') ADVANCE(58);
-      END_STATE();
-    case 64:
       if (lookahead == '+' ||
           lookahead == '-') ADVANCE(66);
       if (('0' <= lookahead && lookahead <= '9')) ADVANCE(175);
+      END_STATE();
+    case 58:
+      if (lookahead == 'C' ||
+          lookahead == 'c') ADVANCE(62);
+      END_STATE();
+    case 59:
+      if (lookahead == 'D' ||
+          lookahead == 'd') ADVANCE(60);
+      END_STATE();
+    case 60:
+      if (lookahead == 'E' ||
+          lookahead == 'e') ADVANCE(79);
+      END_STATE();
+    case 61:
+      if (lookahead == 'I' ||
+          lookahead == 'i') ADVANCE(63);
+      END_STATE();
+    case 62:
+      if (lookahead == 'L' ||
+          lookahead == 'l') ADVANCE(64);
+      END_STATE();
+    case 63:
+      if (lookahead == 'N' ||
+          lookahead == 'n') ADVANCE(58);
+      END_STATE();
+    case 64:
+      if (lookahead == 'U' ||
+          lookahead == 'u') ADVANCE(59);
       END_STATE();
     case 65:
       if (('0' <= lookahead && lookahead <= '9')) ADVANCE(174);
@@ -4558,7 +4566,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       ADVANCE_MAP(
         '!', 141,
         '"', 158,
-        '#', 60,
+        '#', 61,
         '%', 119,
         '&', 124,
         '\'', 37,
@@ -4596,7 +4604,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       if (eof) ADVANCE(78);
       ADVANCE_MAP(
         '!', 52,
-        '#', 60,
+        '#', 61,
         '%', 119,
         '&', 123,
         '(', 88,
@@ -4629,7 +4637,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       ACCEPT_TOKEN(ts_builtin_sym_end);
       END_STATE();
     case 79:
-      ACCEPT_TOKEN(anon_sym_POUNDinclude);
+      ACCEPT_TOKEN(aux_sym_include_definition_token1);
       END_STATE();
     case 80:
       ACCEPT_TOKEN(anon_sym_COLON);
@@ -4996,8 +5004,8 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       ACCEPT_TOKEN(sym_number_literal);
       ADVANCE_MAP(
         '.', 174,
-        'E', 64,
-        'e', 64,
+        'E', 57,
+        'e', 57,
         'X', 68,
         'x', 68,
         'F', 171,
@@ -5011,7 +5019,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       ACCEPT_TOKEN(sym_number_literal);
       if (lookahead == '.') ADVANCE(174);
       if (lookahead == 'E' ||
-          lookahead == 'e') ADVANCE(64);
+          lookahead == 'e') ADVANCE(57);
       if (lookahead == 'F' ||
           lookahead == 'U' ||
           lookahead == 'f' ||
@@ -5021,7 +5029,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
     case 174:
       ACCEPT_TOKEN(sym_number_literal);
       if (lookahead == 'E' ||
-          lookahead == 'e') ADVANCE(64);
+          lookahead == 'e') ADVANCE(57);
       if (lookahead == 'F' ||
           lookahead == 'f') ADVANCE(171);
       if (('0' <= lookahead && lookahead <= '9')) ADVANCE(174);
@@ -7869,7 +7877,7 @@ static const uint16_t ts_parse_table[LARGE_STATE_COUNT][SYMBOL_COUNT] = {
     [ts_builtin_sym_end] = ACTIONS(1),
     [sym_identifier] = ACTIONS(1),
     [anon_sym_version] = ACTIONS(1),
-    [anon_sym_POUNDinclude] = ACTIONS(1),
+    [aux_sym_include_definition_token1] = ACTIONS(1),
     [aux_sym_class_definition_token1] = ACTIONS(1),
     [aux_sym_class_definition_token2] = ACTIONS(1),
     [anon_sym_COLON] = ACTIONS(1),
@@ -8017,7 +8025,7 @@ static const uint16_t ts_parse_table[LARGE_STATE_COUNT][SYMBOL_COUNT] = {
     [aux_sym_source_file_repeat1] = STATE(759),
     [ts_builtin_sym_end] = ACTIONS(5),
     [anon_sym_version] = ACTIONS(7),
-    [anon_sym_POUNDinclude] = ACTIONS(9),
+    [aux_sym_include_definition_token1] = ACTIONS(9),
     [aux_sym_class_definition_token1] = ACTIONS(11),
     [aux_sym_class_definition_token2] = ACTIONS(13),
     [aux_sym_struct_definition_token1] = ACTIONS(15),
@@ -43485,7 +43493,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(1248), 36,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       anon_sym_COLON,
@@ -43535,7 +43543,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(1252), 36,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       anon_sym_COLON,
@@ -57338,7 +57346,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2041), 1,
       anon_sym_version,
     ACTIONS(2044), 1,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
     ACTIONS(2047), 1,
       aux_sym_class_definition_token1,
     ACTIONS(2050), 1,
@@ -57368,7 +57376,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(7), 1,
       anon_sym_version,
     ACTIONS(9), 1,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
     ACTIONS(11), 1,
       aux_sym_class_definition_token1,
     ACTIONS(13), 1,
@@ -57561,7 +57569,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(883), 11,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57576,7 +57584,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(831), 11,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57591,7 +57599,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(815), 11,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57606,7 +57614,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(839), 11,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57621,7 +57629,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(835), 11,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57636,7 +57644,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(859), 11,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57651,7 +57659,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(851), 11,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57666,7 +57674,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(799), 11,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57681,7 +57689,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(867), 11,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57698,7 +57706,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(775), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57713,7 +57721,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(763), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57743,7 +57751,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(769), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57758,7 +57766,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(751), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57773,7 +57781,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(787), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57788,7 +57796,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(781), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57818,7 +57826,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(793), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57833,7 +57841,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(757), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57846,7 +57854,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2115), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57859,7 +57867,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2117), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57872,7 +57880,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(769), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57885,7 +57893,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2119), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57898,7 +57906,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2121), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57911,7 +57919,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(787), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57924,7 +57932,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(827), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57937,7 +57945,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2123), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57950,7 +57958,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2125), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57963,7 +57971,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2127), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57976,7 +57984,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2129), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -57989,7 +57997,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2131), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -58002,7 +58010,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2133), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -58015,7 +58023,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(819), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -58028,7 +58036,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2135), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -58041,7 +58049,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2137), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -58054,7 +58062,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2139), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -58067,7 +58075,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2141), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -58080,7 +58088,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2143), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -58093,7 +58101,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(781), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -58106,7 +58114,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2145), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -58119,7 +58127,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2147), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -58132,7 +58140,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2149), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -58145,7 +58153,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2151), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -58158,7 +58166,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2153), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -58171,7 +58179,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2155), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -58184,7 +58192,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(793), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -58197,7 +58205,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2157), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -58210,7 +58218,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2159), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -58223,7 +58231,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(843), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -58236,7 +58244,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2161), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -58249,7 +58257,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2163), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -58262,7 +58270,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2165), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -58275,7 +58283,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(2167), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,
@@ -58288,7 +58296,7 @@ static const uint16_t ts_small_parse_table[] = {
     ACTIONS(757), 9,
       ts_builtin_sym_end,
       anon_sym_version,
-      anon_sym_POUNDinclude,
+      aux_sym_include_definition_token1,
       aux_sym_class_definition_token1,
       aux_sym_class_definition_token2,
       aux_sym_struct_definition_token1,

@@ -73,8 +73,14 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
-          "value": "#include"
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "\\#include",
+            "flags": "i"
+          },
+          "named": false,
+          "value": "_include"
         },
         {
           "type": "FIELD",

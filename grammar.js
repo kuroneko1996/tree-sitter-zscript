@@ -50,7 +50,7 @@ export default grammar({
         field("version", choice($.number_literal, $.string_literal)),
       ),
 
-    include_definition: ($) => seq("#include", field("path", $.string_literal)),
+    include_definition: ($) => seq(alias(/\#include/i, "_include"), field("path", $.string_literal)),
 
     class_definition: ($) =>
       seq(

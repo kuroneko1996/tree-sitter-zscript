@@ -2127,10 +2127,6 @@
     "named": false
   },
   {
-    "type": "#include",
-    "named": false
-  },
-  {
     "type": "%",
     "named": false
   },
@@ -2348,6 +2344,10 @@
   },
   {
     "type": "_if",
+    "named": false
+  },
+  {
+    "type": "_include",
     "named": false
   },
   {

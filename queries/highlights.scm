@@ -64,7 +64,7 @@
 
 [
 	"version"
-	"#include"
+	"_include"
 	"replaces"
 	"flagdef"
 	"property"
