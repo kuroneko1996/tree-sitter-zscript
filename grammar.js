@@ -44,24 +44,26 @@ export default grammar({
         $.enum_declaration,
       ),
 
-      version_definition: ($) =>
-        seq(
-          alias(/version/i, "version"),
-          field(
-            "version",
-            choice(
-              token(prec(1, /\d+\.\d+\.\d+/)),
-              $.number_literal,
-              $.string_literal,
-            ),
+    version_definition: ($) =>
+      seq(
+        alias(/version/i, "version"),
+        field(
+          "version",
+          choice(
+            token(prec(1, /\d+\.\d+\.\d+/)),
+            $.number_literal,
+            $.string_literal,
           ),
         ),
+      ),
 
-    include_definition: ($) => seq(alias(/\#include/i, "_include"), field("path", $.string_literal)),
+    include_definition: ($) =>
+      seq(alias(/\#include/i, "_include"), field("path", $.string_literal)),
 
     class_definition: ($) =>
       seq(
         optional(alias(/extend/i, "_extend")),
+        optional(alias(/mixin/i, "_mixin")),
         alias(/class/i, "_class"),
         field("name", $.identifier),
         field("inherit", optional(seq(":", $.identifier))),
@@ -129,6 +131,9 @@ export default grammar({
         $.const_definition,
       ),
 
+    mixin_statement: ($) =>
+      seq(alias(/mixin/i, "_mixin"), field("name", $.identifier), ";"),
+
     _declaration: ($) =>
       choice(
         $._struct_declaration,
@@ -136,6 +141,7 @@ export default grammar({
         $.property_declaration,
         $.default_declaration,
         $.states_declaration,
+        $.mixin_statement,
       ),
 
     method_declaration: ($) =>

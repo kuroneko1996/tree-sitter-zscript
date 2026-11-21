@@ -131,6 +131,24 @@
           ]
         },
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "mixin",
+                "flags": "i"
+              },
+              "named": false,
+              "value": "_mixin"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "ALIAS",
           "content": {
             "type": "PATTERN",
@@ -501,6 +519,33 @@
         }
       ]
     },
+    "mixin_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "mixin",
+            "flags": "i"
+          },
+          "named": false,
+          "value": "_mixin"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ";"
+        }
+      ]
+    },
     "_declaration": {
       "type": "CHOICE",
       "members": [
@@ -523,6 +568,10 @@
         {
           "type": "SYMBOL",
           "name": "states_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "mixin_statement"
         }
       ]
     },

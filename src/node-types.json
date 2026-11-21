@@ -529,6 +529,10 @@
           "named": true
         },
         {
+          "type": "mixin_statement",
+          "named": true
+        },
+        {
           "type": "modifier",
           "named": true
         },
@@ -1469,6 +1473,22 @@
     }
   },
   {
+    "type": "mixin_statement",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "modifier",
     "named": true,
     "fields": {},
@@ -2352,6 +2372,10 @@
   },
   {
     "type": "_map",
+    "named": false
+  },
+  {
+    "type": "_mixin",
     "named": false
   },
   {

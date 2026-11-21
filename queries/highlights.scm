@@ -72,6 +72,7 @@
 	"_states"
 	"_default"
 	"_super"
+	"_mixin"
 ] @keyword
 
 [
